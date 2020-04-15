@@ -19,14 +19,11 @@ def listAvailableDevices():
     if(soco.discover()):
         for zone in soco.discover():
             d[zone.player_name] = {}
-            device = by_name(zone.player_name)
-
             d[zone.player_name]['zone.player_name'] = zone.player_name
             d[zone.player_name]['zone.uid'] = zone.uid
             d[zone.player_name]['zone.volume'] = zone.volume
             d[zone.player_name]['zone.is_coordinator'] = zone.is_coordinator
-            d[zone.player_name]['transport.state'] = device.get_current_transport_info()[
-                'current_transport_state']
+
         response = jsonify({'devices': d}), status.HTTP_200_OK
     else:
         response = jsonify({'status': 'no devices found'}
