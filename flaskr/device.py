@@ -10,10 +10,10 @@ from flask import (
 from flask_api import status
 
 
-bp = Blueprint('device', __name__, url_prefix='/devices')
+bp = Blueprint('device', __name__, url_prefix='/devices/v1')
 
 
-@bp.route('/v1/', methods=['GET'])
+@bp.route('/', methods=['GET'])
 def listAvailableDevices():
     d = {}
     if(soco.discover()):
@@ -31,7 +31,7 @@ def listAvailableDevices():
     return response
 
 
-@bp.route('/v1/<name>', methods=['GET'])
+@bp.route('/<name>', methods=['GET'])
 def getDeviceByName(name=str):
     if not (by_name(name) == None):
         device = by_name(name)
@@ -45,7 +45,7 @@ def getDeviceByName(name=str):
     return response
 
 
-@bp.route('/v1/<name>/volume/<volume>', methods=['PUT'])
+@bp.route('/<name>/volume/<volume>', methods=['PUT'])
 def updateDeviceVolume(name=str, volume=int):
     try:
         device = by_name(name)
